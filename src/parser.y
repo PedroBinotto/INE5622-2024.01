@@ -31,73 +31,88 @@ void yyerror(char *);
 
 %%
 
-program: stmtlist
-       | funclist
-       |
-       ;
+program: 
+  stmtlist
+  | funclist
+  |
+  ;
 
-funclist: funcdef funclist 
-        | funcdef
-        ;
+funclist: 
+  funcdef funclist 
+  | funcdef
+  ;
 
-funcdef: T_FUNCDEF T_IDENT T_OPEN_PAREN parlist T_CLOSE_PAREN T_OPEN_BRACE stmtlist T_CLOSE_BRACE;
+funcdef: 
+  T_FUNCDEF T_IDENT T_OPEN_PAREN parlist T_CLOSE_PAREN T_OPEN_BRACE stmtlist T_CLOSE_BRACE;
 
-parlist: T_INT T_IDENT T_COMMA parlist
-       | T_INT T_IDENT
-       |
-       ;
+parlist:
+  T_INT T_IDENT T_COMMA parlist
+  | T_INT T_IDENT
+  |
+  ;
 
-stmt: T_INT T_IDENT T_SEMICOLON
-    | atribstmt T_SEMICOLON
-    | printstmt T_SEMICOLON
-    | T_RETURN
-    | ifstmt
-    | T_OPEN_BRACE stmtlist T_CLOSE_BRACE
-    | T_SEMICOLON
-    ;
+stmt: 
+  T_INT T_IDENT T_SEMICOLON
+  | atribstmt T_SEMICOLON
+  | printstmt T_SEMICOLON
+  | T_RETURN
+  | ifstmt
+  | T_OPEN_BRACE stmtlist T_CLOSE_BRACE
+  | T_SEMICOLON
+  ;
 
-atribstmt: T_IDENT  T_EQUALS_SIGN expr 
-         | T_IDENT T_EQUALS_SIGN fcall
-         ;
+atribstmt: 
+  T_IDENT  T_EQUALS_SIGN expr 
+  | T_IDENT T_EQUALS_SIGN fcall
+  ;
 
-fcall: T_IDENT T_OPEN_PAREN parlistcall T_CLOSE_PAREN;
+fcall: 
+  T_IDENT T_OPEN_PAREN parlistcall T_CLOSE_PAREN;
 
-parlistcall: T_IDENT T_COMMA parlistcall
-           | T_IDENT
-           |
-           ;
+parlistcall:
+  T_IDENT T_COMMA parlistcall
+  | T_IDENT
+  |
+  ;
 
 printstmt: T_PRINT expr;
 
-ifstmt: T_IF T_OPEN_PAREN expr T_CLOSE_PAREN stmt T_ELSE stmt
-      | T_IF T_OPEN_PAREN expr T_CLOSE_PAREN stmt
-      ;
+ifstmt: 
+  T_IF T_OPEN_PAREN expr T_CLOSE_PAREN stmt T_ELSE stmt
+  | T_IF T_OPEN_PAREN expr T_CLOSE_PAREN stmt
+  ;
 
-stmtlist: stmt stmtlist
-        | stmt
-        ;
+stmtlist: 
+  stmt stmtlist
+  | stmt
+  ;
 
-expr: numexpr T_LESSER_THAN numexpr
-      | numexpr T_GREATER_THAN numexpr
-      | numexpr assertion numexpr
-      | numexpr
-      ;
+expr: 
+  numexpr T_LESSER_THAN numexpr
+  | numexpr T_GREATER_THAN numexpr
+  | numexpr assertion numexpr
+  | numexpr
+  ;
 
-numexpr: numexpr T_PLUS_SIGN term
-       | numexpr T_MINUS_SIGN term
-       | term
-       ;
+numexpr: 
+  numexpr T_PLUS_SIGN term
+  | numexpr T_MINUS_SIGN term
+  | term
+  ;
 
-term: term T_ASTERISK_SIGN factor
-    | factor
-    ;
+term: 
+  term T_ASTERISK_SIGN factor
+  | factor
+  ;
 
-assertion: T_EQUALS_SIGN T_EQUALS_SIGN;
+assertion: 
+  T_EQUALS_SIGN T_EQUALS_SIGN;
 
-factor: INT_LITERAL
-      | numexpr
-      | T_IDENT
-      ;
+factor: 
+  INT_LITERAL
+  | numexpr
+  | T_IDENT
+  ;
 
 %%
 
