@@ -1,4 +1,4 @@
-%option noyywrap
+%option noyywrap noinput nounput
 
 CHAR      [_a-zA-Z]
 DIGIT     [0-9]
@@ -47,7 +47,3 @@ void yyerror(char *);
 .                                        { printf("Unrecognized character: %s\n", yytext ); }
 
 %%
-
-int main(void) {
-  yylex();
-}

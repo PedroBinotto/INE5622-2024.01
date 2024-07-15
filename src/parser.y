@@ -1,16 +1,6 @@
 %{
-
 #include <stdio.h>
 void yyerror(char *);
-
-
-%union YYLVALTYPE {
-  int intval;
-  char *strval;
-};
-
-#define YYSTYPE YYLVALTYPE ;
-
 %}
 
 %token INT_LITERAL
@@ -34,6 +24,10 @@ void yyerror(char *);
 %token T_CLOSE_PAREN
 %token T_OPEN_BRACE
 %token T_CLOSE_BRACE
+%union {
+  int intval;
+  char *strval;
+};
 
 %%
 
@@ -56,6 +50,7 @@ parlist: T_INT T_IDENT T_COMMA parlist
 stmt: T_INT T_IDENT T_SEMICOLON
     | atribstmt T_SEMICOLON
     | printstmt T_SEMICOLON
+    | T_RETURN
     | ifstmt
     | T_OPEN_BRACE stmtlist T_CLOSE_BRACE
     | T_SEMICOLON
