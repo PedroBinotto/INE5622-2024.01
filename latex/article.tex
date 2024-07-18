@@ -1,0 +1,219 @@
+\documentclass[12pt]{article}
+\usepackage[portuguese, english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper, left=2.5cm, top=2.5cm]{geometry}
+\usepackage{syntax}
+\usepackage{authblk}
+\usepackage{fontspec}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{subcaption}
+\usepackage{verbatimbox}
+\usepackage{url}
+\usepackage{multicol}
+
+\newcommand{\pprime}{\ensuremath{^{\prime}}}
+\addto\captionsportuguese{\renewcommand*\contentsname{Sumário}}
+\setcounter{secnumdepth}{0}
+\onehalfspacing
+
+\title{Relatório da Atividade Avaliativa \#2: Analisador Léxico e Analisador Sintático}
+\author[1]{Pedro Santi Binotto [20200634]\thanks{\texttt{pedro.binotto@grad.ufsc.br}}}
+\author[2]{Eduardo Caigar Dudel [18206076]\thanks{\texttt{dudeleduardo@gmail.com}}}
+\author[3]{Arthur Alexandre Nascimento [18200410]\thanks{\texttt{arthuralexnascimento@hotmail.com}}}
+\author[4]{Eduardo Sousa Szczepaniak [20202478]\thanks{\texttt{szcz.eduardo@gmail.com}}}
+\date{\today}
+\affil[1]{Departamento de Informática e Estatística, Universidade Federal de Santa Catarina}
+
+\begin{document}
+\begin{titlepage}
+\selectlanguage{portuguese}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+  Relatório do projeto prático da disciplina de \textit{Introdução a Compiladores}.
+\end{abstract}
+
+\end{titlepage}
+
+\newpage
+\tableofcontents
+
+\newpage
+\section{Elaboração do trabalho}
+\paragraph{}
+O trabalho foi elaborando utilizando as ferramentas \textit{Flex}\cite{mitFlex1990} e \textit{Bison}\cite{mitBison1992}
+para gerar os analisadores léxico e sintático, respectivamente. Além dos manuais das ferramentas, a apostila
+"\textit{Lex \& Yacc}"\cite{niemannYacc} foi outro recurso extensivamente consultado para utilização das tecnologias
+empregadas.
+
+\paragraph{}
+
+
+\newpage
+\section{Normalização da gramática}
+\subsection{Gramática original da linguagem}
+
+\paragraph{}
+A seguir está a gramática original, como fornecida na proposta do trabalho, em notação BNF:
+
+\noindent\rule{\textwidth}{0.2pt}
+
+\begin{multicols}{2}
+\raggedcolumns
+\setlength{\columnseprule}{0.2pt}
+\begin{grammar}
+<main> ::= <stmt>
+  \alt <flist>
+  \alt <empty>
+
+<flist> ::= <fdef> <flist>
+  \alt <fdef>
+
+<fdef> ::= ‘\texttt{def}’ ‘\texttt{id}’ ‘\texttt{(}’ <parlist> ‘\texttt{)}’ ‘\texttt{\{}’ <stmtlist> ‘\texttt{\}}’
+
+<parlist> ::= ‘\texttt{int}’ ‘\texttt{id}’ ‘\texttt{,}’ <parlist>
+  \alt ‘\texttt{int}’ ‘\texttt{id}’
+  \alt <empty>
+
+<stmt> ::= ‘\texttt{int}’ ‘\texttt{id}’ ‘\texttt{;}’
+  \alt <atribst> ‘\texttt{;}’
+  \alt <printst> ‘\texttt{;}’
+  \alt <returnst> ‘\texttt{;}’
+  \alt <ifstmt>
+  \alt ‘\texttt{\{}’ <stmtlist> ‘\texttt{\}}’
+  \alt ‘\texttt{;}’
+
+<atribst> ::= ‘\texttt{id}’ = <expr>
+  \alt ‘\texttt{id}’ = <fcall>
+
+<fcall> ::= ‘\texttt{id}’ ‘\texttt{(}’ <parlistcall> ‘\texttt{)}’
+
+<parlistcall> ::= ‘\texttt{id}’ ‘\texttt{,}’ <parlistcall>
+  \alt ‘\texttt{id}’
+  \alt <empty>
+
+<printst> ::= ‘\texttt{print}’ <expr>
+
+<returnst> ::= ‘\texttt{return}’
+
+<ifstmt> ::= ‘\texttt{if}’ ‘\texttt{(}’ <expr> ‘\texttt{)}’ <stmt> ‘\texttt{else}’ <stmt>
+  \alt ‘\texttt{if}’ ‘\texttt{(}’ <expr> ‘\texttt{)}’ <stmt>
+
+<stmtlist> ::= <stmt> <stmtlist>
+  \alt <stmt>
+
+<expr> ::= <numexpr> ‘\texttt{\char60}’ <numexpr>
+  \alt <numexpr> ‘\texttt{>}’ <numexpr>
+  \alt <numexpr> ‘\texttt{==}’ <numexpr>
+  \alt <numexpr>
+
+<numexpr> ::= <numexpr> ‘\texttt{+}’ <term>
+  \alt <numexpr> ‘\texttt{-}’ <term>
+  \alt <term>
+
+<term> ::= <term> ‘\texttt{*}’ <factor>
+  \alt <factor>
+
+<factor> ::= ‘\texttt{num}’
+  \alt ‘\texttt{(}’ <numexpr> ‘\texttt{)}’
+  \alt ‘\texttt{id}’
+\end{grammar}
+\end{multicols}
+
+\noindent\rule{\textwidth}{0.2pt}
+
+\newpage
+\subsection{Gramática ajustada LALR}
+\paragraph{}
+Gramática ajustada, para aproximar uma LL1:
+
+\noindent\rule{\textwidth}{0.2pt}
+
+\begin{multicols}{2}
+\raggedcolumns
+\setlength{\columnseprule}{0.2pt}
+\begin{grammar}
+<main> ::= <stmt> 
+  \alt <flist> 
+  \alt <empty>
+
+<flist> ::= <fdef> <flist \pprime>
+
+<flist \pprime> ::= <flist> 
+  \alt <empty>
+
+<fdef> ::= ‘\texttt{def}’ ‘\texttt{id}’ ‘\texttt{(}’ <parlist> ‘\texttt{)}’ ‘\texttt{\{}’ <stmtlist> ‘\texttt{\}}’
+
+<parlist> ::= ‘\texttt{int}’ ‘\texttt{id}’ <parlist \pprime>
+
+<parlist \pprime> ::= ‘\texttt{,}’ <parlist> 
+  \alt <empty>
+
+<stmt> ::= ‘\texttt{int}’ ‘\texttt{id}’ ‘\texttt{;}’
+  \alt <atribst> ‘\texttt{;}’
+  \alt <printst> ‘\texttt{;}’
+  \alt <returnst> ‘\texttt{;}’
+  \alt <ifstmt>
+  \alt ‘\texttt{\{}’ <stmtlist> ‘\texttt{\}}’
+  \alt ‘\texttt{;}’
+
+<atribst> ::= ‘\texttt{id}’ = <atribst \pprime>
+
+<atribst \pprime> ::= <expr> 
+  \alt <fcall>
+
+<fcall> ::= ‘\texttt{id}’ ‘\texttt{(}’ <parlistcall> ‘\texttt{)}’
+
+<parlistcall> ::= ‘\texttt{id}’ <parlistcall \pprime>
+
+<parlistcall \pprime> ::= ‘\texttt{,}’ <parlistcall> 
+  \alt <empty>
+
+<printst> ::= ‘\texttt{print}’ <expr>
+
+<returnst> ::= ‘\texttt{return}’
+
+<ifstmt> ::= ‘\texttt{if}’ ‘\texttt{(}’ <expr> ‘\texttt{)}’ <stmt> <ifstmt \pprime>
+
+<ifstmt \pprime> ::= ‘\texttt{else}’ <stmt> 
+  \alt <empty>
+
+<stmtlist> ::= <stmt> <stmtlist \pprime>
+
+<stmtlist \pprime> ::= <stmtlist> 
+  \alt <empty>
+
+<expr> ::= <numexpr> <expr \pprime>
+
+<expr \pprime> ::= ‘\texttt{\char60}’ <numexpr>
+  \alt ‘\texttt{>}’ <numexpr>
+  \alt ‘\texttt{==}’ <numexpr>
+  \alt <empty>
+
+<numexpr> ::= <term> <numexpr \pprime>
+
+<numexpr \pprime> ::= ‘\texttt{+}’ <term> <numexpr \pprime>
+  \alt ‘\texttt{-}’ <term> <numexpr \pprime>
+  \alt <empty>
+
+<term> ::= <factor> <term \pprime>
+
+<term \pprime> ::= ‘\texttt{*}’ <factor> <term \pprime>
+  \alt <empty>
+
+<factor> ::= ‘\texttt{num}’
+  \alt ‘\texttt{(}’ <numexpr> ‘\texttt{)}’
+  \alt ‘\texttt{id}’
+\end{grammar}
+\end{multicols}
+
+\noindent\rule{\textwidth}{0.2pt}
+
+\newpage
+\section{Referências Bibliográficas}
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
