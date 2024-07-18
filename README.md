@@ -25,9 +25,6 @@ Para compilar o projeto, basta executar o comando `make` no diretório `src` do 
 # pwd: [...]/INE5622-2024.01/src
 user@linux ➜ src $ make
 # bison -t -v -d parser.y
-# parser.y: aviso: 17 conflitos de deslocamento/redução [-Wconflicts-sr]
-# parser.y: aviso: 32 conflitos de redução/redução [-Wconflicts-rr]
-# parser.y: nota: execute novamente com a opção "-Wcounterexamples" para gerar contraexemplos de conflito
 # flex lexer.l
 # gcc -o xpp.out parser.tab.c lex.yy.c
 ```
@@ -40,8 +37,8 @@ user@linux ➜ $ src ./xpp.out
 # > int D;
 # > T_INTT_IDENTT_SEMICOLON
 # > D = func();
-# > T_IDENTT_EQUALS_SIGNT_IDENTT_OPEN_PARENT_CLOSE_PARENT_SEMICOLON
+# > T_IDENT T_EQUALS_SIGN T_IDENT T_OPEN_PAREN T_CLOSE_PAREN T_SEMICOLON
 # > ^C
 user@linux ➜ src $ ./xpp.out < test.xpp
-# T_FUNCDEFT_IDENTT_OPEN_PARENT_INTT_IDENTT_COMMAT_INTT_IDENTT_CLOSE_PAREN[...]
+# T_FUNCDEF T_IDENT T_OPEN_PAREN T_INT T_IDENT T_COMMA T_INT T_IDENT T_CLOSE_PAREN[...]
 ```
