@@ -110,7 +110,7 @@ assertion:
 
 factor: 
   INT_LITERAL
-  | numexpr
+  | T_OPEN_PAREN numexpr T_CLOSE_PAREN
   | T_IDENT
   ;
 

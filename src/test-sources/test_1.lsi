@@ -1,0 +1,49 @@
+/*
+ * test_1.lsi
+ * Arquivo de teste n. 1
+ * Não deve produzir erros léxicos ou sintáticos
+ */
+
+ def main() {
+   int A;
+   int B;
+   int C;
+   int D;
+
+   A = func_A();
+   B = func_B();
+   C = func_C();
+   D = func_D();
+
+   print ((A * B) - C) * D;
+ }
+
+def func_A() {
+  int num_1;
+  int num_2;
+  int num_3;
+
+  num_1 = 1;
+  num_2 = 2;
+  num_3 = num_1 + num_2;
+
+  return;
+}
+
+def func_B() { 
+  print 1234;
+
+  return;
+}
+
+def func_C() { return; }
+
+def func_D() {
+  int var_A;
+  int var_B;
+  int var_C;
+  int var_D;
+  int var_E;
+
+  print var_A + var_B - var_C + var_D - var_E;
+}
