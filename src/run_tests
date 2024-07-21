@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+test_sources_dir="./test-sources"
+compiler="./xpp.out"
+
+if [ ! -f "$compiler" ]; then
+    echo "Binário do analisador não foi encontrado. Você compilou o projeto?"
+    exit 1;
+fi
+
+for test_file in "$test_sources_dir"/*.lsi; 
+do
+  echo ""
+  echo "========================================="
+  echo "Executando arquivo de teste '$test_file'"
+  $compiler < $test_file
+done
