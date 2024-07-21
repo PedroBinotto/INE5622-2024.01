@@ -38,8 +38,8 @@ void lexical_error(char *msg, char *text, int ln) {
  ")"                                     { printf("T_CLOSE_PAREN ");   return T_CLOSE_PAREN; }
 "{"                                      { printf("T_OPEN_BRACE ");    return T_OPEN_BRACE; }
 "}"                                      { printf("T_CLOSE_BRACE ");   return T_CLOSE_BRACE; }
-[[:digit:]]+                             { printf("INT_LITERAL "); yylval.intval = atoi(yytext); return INT_LITERAL; }
-[[:alpha:]]([[:alnum:]_]){0,29}          { printf("T_IDENT "); yylval.strval = strdup(yytext); return T_IDENT; }
+[[:digit:]]+                             { printf("INT_LITERAL ");     return INT_LITERAL; }
+[[:alpha:]]([[:alnum:]_]){0,29}          { printf("T_IDENT ");         return T_IDENT; }
 "/*"                                     { BEGIN(COMMENT); }
 <COMMENT>"*/"                            { BEGIN(INITIAL); }
 <COMMENT>\n                              {}

@@ -39,6 +39,20 @@ user@linux ➜ $ src ./xpp.out
 # > D = func();
 # > T_IDENT T_EQUALS_SIGN T_IDENT T_OPEN_PAREN T_CLOSE_PAREN T_SEMICOLON
 # > ^C
-user@linux ➜ src $ ./xpp.out < test.xpp
+user@linux ➜ src $ ./xpp.out < ./test-sources/test_1.lsi
 # T_FUNCDEF T_IDENT T_OPEN_PAREN T_INT T_IDENT T_COMMA T_INT T_IDENT T_CLOSE_PAREN[...]
+```
+
+Os testes também podem ser executados automaticamente através do script incluido:
+
+```bash
+# pwd: [...]/INE5622-2024.01/src
+user@linux ➜ $ ./run_tests
+# =========================================
+# Executando arquivo de teste './test-sources/test_1.lsi'
+# T_FUNCDEF T_IDENT T_OPEN_PAREN T_CLOSE_PAREN ...
+#
+# =========================================
+# Executando arquivo de teste './test-sources/test_2.lsi'
+# ...
 ```

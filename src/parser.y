@@ -1,10 +1,11 @@
 %{
 #include <stdio.h>
-void yyerror(char *);
+int yylex();
+void yyerror(const char *);
 %}
 
 %locations
-%error-verbose 
+%define parse.error verbose
 %token INT_LITERAL
 %token T_IDENT
 %token T_INT
@@ -26,10 +27,6 @@ void yyerror(char *);
 %token T_CLOSE_PAREN
 %token T_OPEN_BRACE
 %token T_CLOSE_BRACE
-%union {
-  int intval;
-  char *strval;
-};
 
 %%
 
@@ -118,7 +115,7 @@ factor:
 
 %%
 
-void yyerror(char *s) {
+void yyerror(const char *s) {
   fprintf(stderr, "%s\n", s);
 }
 
