@@ -30,7 +30,7 @@
   colorlinks = true,
 }
 
-\title{Relatório da Atividade Avaliativa \#2: Analisador Léxico e Analisador Sintático}
+\title{Texto auxiliar para Atividade Avaliativa \#2: Analisador Léxico e Analisador Sintático}
 \author[1]{Pedro Santi Binotto [20200634]\thanks{\texttt{pedro.binotto@grad.ufsc.br}}}
 \author[2]{Eduardo Caigar Dudel [18206076]\thanks{\texttt{dudeleduardo@gmail.com}}}
 \author[3]{Arthur Alexandre Nascimento [18200410]\thanks{\texttt{arthuralexnascimento@hotmail.com}}}
@@ -72,6 +72,28 @@ ambiguidades na gramática sem fazer alterações na especificação da linguage
 Uma versão da gramática ajustada para resolver os casos de ambiguidade possíveis e livre de recursão à esquerda pode ser
 encontrada na seção ``\nameref{sec:normalizacao-gramatica}''.
 
+A implementação final dos analisadores adiciona uma propriedade além do que descreve a especificação da gramática para
+possibilitar a escrita de comentários nos arquivos de código fonte:
+
+\begin{verbatim}
+/*
+ * Texto dentro destes delimitadores não será interpretado.
+ *
+ * Palavras-chave e símbolos da linguagem também não produzem
+ * efeito nenhum:
+ *
+ * def int print return () {} ;
+ */
+
+def main() {
+  int A = calc_a();
+  return;
+}
+\end{verbatim}
+
+Os arquivos de teste utilizam destes comentários como uma forma de registrar metadados sobre o caso de teste e saída
+esperada da execução da análise.
+
 \newpage
 \section{Normalização da gramática}
 \label{sec:normalizacao-gramatica}
@@ -79,8 +101,6 @@ encontrada na seção ``\nameref{sec:normalizacao-gramatica}''.
 
 \paragraph{}
 A seguir está a gramática original, como fornecida na proposta do trabalho, em notação BNF:
-
-\noindent\rule{\textwidth}{0.2pt}
 
 \begin{multicols}{2}
 \raggedcolumns
@@ -144,15 +164,11 @@ A seguir está a gramática original, como fornecida na proposta do trabalho, em
 \end{grammar}
 \end{multicols}
 
-\noindent\rule{\textwidth}{0.2pt}
-
 \newpage
 \subsection{Gramática ajustada}
 \paragraph{}
 Gramática ajustada, livre de recursão à esquerda e corrigida para retificar todos os casos de ambiguidade que são 
 possíveis; em notação BNF:
-
-\noindent\rule{\textwidth}{0.2pt}
 
 \begin{multicols}{2}
 \raggedcolumns
@@ -231,8 +247,6 @@ possíveis; em notação BNF:
   \alt ‘\texttt{id}’
 \end{grammar}
 \end{multicols}
-
-\noindent\rule{\textwidth}{0.2pt}
 
 \newpage
 \section{Referências Bibliográficas}
