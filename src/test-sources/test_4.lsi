@@ -2,5 +2,31 @@
  * test_4.lsi
  * Arquivo de teste n. 4
  * Deve produzir erro léxico
- * Saída do programa:
+ * Saída do programa: "lexical error, Invalid sequence: '10e', l20"
  */
+
+def main() {
+  int value_a;
+  int value_b;
+  int value_3;
+  value_a = aux_a(value_a);
+  value_b = aux_b(value_b);
+  value_3 = aux_c(value_3);
+  print value_a + value_b + value_3;
+  return;
+}
+
+def aux_a(int a) {
+  a = 10e;
+  return;
+}
+
+def aux_b(int a) {
+  a = 20e;
+  return;
+}
+
+def aux_c(int a) {
+  a = 30e;
+  return;
+}

@@ -1,6 +1,26 @@
 /*
  * test_7.lsi
  * Arquivo de teste n. 7
- * Deve produzir erro léxico
- * Saída do programa:
+ * Deve produzir erro sintático
+ * Saída do programa: "syntax error, unexpected T_OPEN_PAREN, expecting T_CLOSE_PAREN"
  */
+
+ def main() {
+   int hello;
+   hello = aux_a(aux_b());    /* <- erro acontece aqui */
+   print hello;
+   return;
+ }
+
+def aux_a(int a) {
+  return a + 01001000 01000101 01001100 01001100 01001111;  /*H E L L O*/
+}
+
+def aux_b() {
+  return 01010111 01001111 01010010 01001100 01000100;      /*W O R L D*/
+}
+
+def aux_c() {
+  a = 30e;
+  return;
+}

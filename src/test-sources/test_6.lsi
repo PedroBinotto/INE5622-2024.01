@@ -1,6 +1,27 @@
 /*
  * test_6.lsi
  * Arquivo de teste n. 6
- * Deve produzir erro léxico
- * Saída do programa:
+ * Deve produzir erro sintático
+ * Saída do programa: "syntax error, unexpected T_INT, expecting T_IDENT"
  */
+
+ def main() {
+   int hello;
+   hello = aux_a();
+   print hello;
+   return;
+ }
+
+def int aux_a(int a) {  /* <- erro acontece aqui */
+  return 01001000 01000101 01001100 01001100 01001111;      /*H E L L O*/
+}
+
+def aux_b(int a) {
+  a = 20e;
+  return;
+}
+
+def aux_c(int a) {
+  a = 30e;
+  return;
+}

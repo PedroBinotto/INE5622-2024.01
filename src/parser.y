@@ -3,6 +3,8 @@
 void yyerror(char *);
 %}
 
+%locations
+%error-verbose 
 %token INT_LITERAL
 %token T_IDENT
 %token T_INT
@@ -55,7 +57,7 @@ stmt:
   T_INT T_IDENT T_SEMICOLON
   | atribstmt T_SEMICOLON
   | printstmt T_SEMICOLON
-  | T_RETURN
+  | T_RETURN T_SEMICOLON
   | ifstmt
   | T_OPEN_BRACE stmtlist T_CLOSE_BRACE
   | T_SEMICOLON

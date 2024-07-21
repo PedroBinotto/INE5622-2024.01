@@ -2,5 +2,31 @@
  * test_2.lsi
  * Arquivo de teste n. 2
  * Deve produzir erro léxico
- * Saída do programa:
+ * Saída do programa: "lexical error, Unrecognized character: '$', l9"
  */
+
+def main() {
+  int $value_1;
+  int $value_2;
+  int $value_3;
+  aux_a($value_1);
+  aux_b($value_2);
+  aux_c($value_3);
+  print $value_1 + $value_2 + $value_3;
+  return;
+}
+
+def aux_a(int a) {
+  a = 10;
+  return;
+}
+
+def aux_b(int a) {
+  a = 20;
+  return;
+}
+
+def aux_c(int a) {
+  a = 30;
+  return;
+}

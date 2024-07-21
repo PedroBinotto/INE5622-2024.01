@@ -1,6 +1,27 @@
 /*
  * test_5.lsi
  * Arquivo de teste n. 5
- * Deve produzir erro léxico
- * Saída do programa:
+ * Deve produzir erro sintático
+ * Saída do programa: "syntax error, unexpected INT_LITERAL, expecting T_SEMICOLON"
  */
+
+ def main() {
+   int hello;
+   hello = aux_a();
+   print hello;
+   return 0;    /* <- erro acontece aqui */
+ }
+
+def int aux_a(int a) {
+  return 01001000 01000101 01001100 01001100 01001111;  /*H E L L O*/
+}
+
+def aux_b(int a) {
+  a = 20e;
+  return;
+}
+
+def aux_c(int a) {
+  a = 30e;
+  return;
+}

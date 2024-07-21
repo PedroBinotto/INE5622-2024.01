@@ -2,5 +2,31 @@
  * test_3.lsi
  * Arquivo de teste n. 3
  * Deve produzir erro léxico
- * Saída do programa:
+ * Saída do programa: "lexical error, Invalid sequence: '1_value', l9"
  */
+
+def main() {
+  int 1_value;
+  int 2_value;
+  int 3_value;
+  aux_a(1_value);
+  aux_b(2_value);
+  aux_c(3_value);
+  print 1_value + 2_value + 3_value;
+  return;
+}
+
+def aux_a(int a) {
+  a = 10;
+  return;
+}
+
+def aux_b(int a) {
+  a = 20;
+  return;
+}
+
+def aux_c(int a) {
+  a = 30;
+  return;
+}
