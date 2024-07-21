@@ -4,7 +4,7 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 
 test_sources_dir="./test-sources"
-compiler="./xpp.out"
+compiler="./lsi.out"
 
 if [ ! -f "$compiler" ]; then
     echo "Binário do analisador não foi encontrado. Você compilou o projeto?"

@@ -7,7 +7,7 @@ flex: lexer.l bison
 	flex lexer.l
 
 compile: flex bison
-	gcc -o xpp.out parser.tab.c lex.yy.c
+	gcc -o lsi.out parser.tab.c lex.yy.c
 
 clean:
-	rm xpp.out parser.tab.c lex.yy.c parser.tab.h parser.output
+	rm lsi.out parser.tab.c lex.yy.c parser.tab.h parser.output
