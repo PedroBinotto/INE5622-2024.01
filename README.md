@@ -13,7 +13,7 @@ Analisador Léxico + Analisador Sintático implementados via Flex + Bison.
 Pré-requisitos:
 
 - [Flex](https://github.com/westes/flex);
-- [Gnu Bison](https://www.gnu.org/software/bison/);
+- [GNU Bison](https://www.gnu.org/software/bison/);
 - [GCC](https://gcc.gnu.org/);
 - [GNU Make](https://www.gnu.org/software/make/);
 
