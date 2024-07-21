@@ -4,6 +4,8 @@
 
 Analisador Léxico + Analisador Sintático implementados via Flex + Bison.
 
+[self link](https://github.com/PedroBinotto/INE5622-2024.01)
+
 ---
 
 ## Instruções de execução do projeto
